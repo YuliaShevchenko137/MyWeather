@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">SumyWeather</string>
+    <string name="sinoptic">Sinoptic</string>
+    <string name="gismeteo">Gismeteo</string>
+    <string name="weather">WEATHER</string>
+    <string name="rainProbability">Вероятность дождя</string>
+    <string name="title">Погода в г. Сумы</string>
+    <string name="dateFormat" translatable="false">dd.mm.yyyy</string>
+    <string name="temperature">Температура</string>
+    <string name="celsium" translatable="false">° C</string>
+    <string name="prProbability">Вероятность осадков</string>
+    <string name="percent" translatable="false">%</string>
+    <string name="wind">Ветер</string>
+    <string name="ms">м/с</string>
+    <string name="night">Ночь</string>
+    <string name="day">День</string>
+</resources>
