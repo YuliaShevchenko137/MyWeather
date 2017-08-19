@@ -1,4 +1,4 @@
-package com.shevchenko.yulia.myweather;
+package com.shevchenko.yulia.myweather.adapters;
 
 
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.shevchenko.yulia.myweather.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -92,7 +94,7 @@ public class DayWeatherAdapter extends RecyclerView.Adapter {
             JSONObject wind = day.getJSONObject("Wind");
             int speed = wind.getJSONObject("Speed").getInt("Value");
             String direction = wind.getJSONObject("Direction").getString("Localized");
-            newHolder.dayWind.setText(direction + " ," + speed + " м/с");
+            newHolder.dayWind.setText(direction + ", " + speed + " м/с");
             JSONObject night = jsonObj.getJSONObject("Night");
             numIcon = night.getInt("Icon");
             newHolder.nightIcon.setImageResource(mContext.getResources().getIdentifier("p" + numIcon, "drawable", mContext.getPackageName()));
@@ -101,7 +103,7 @@ public class DayWeatherAdapter extends RecyclerView.Adapter {
             wind = night.getJSONObject("Wind");
             speed = wind.getJSONObject("Speed").getInt("Value");
             direction = wind.getJSONObject("Direction").getString("Localized");
-            newHolder.nightWind.setText(direction + " ," + speed + " м/с");
+            newHolder.nightWind.setText(direction + ", " + speed + " м/с");
         } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }

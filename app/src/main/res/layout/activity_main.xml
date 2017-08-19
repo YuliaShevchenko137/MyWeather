@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:textAlignment="center"
     android:weightSum="1"
-    tools:context="com.shevchenko.yulia.myweather.MainActivity">
+    tools:context="com.shevchenko.yulia.myweather.activities.MainActivity">
 
     <TextView
         android:id="@+id/title"

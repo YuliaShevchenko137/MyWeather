@@ -1,7 +1,4 @@
-package com.shevchenko.yulia.myweather.helper;
-
-import com.shevchenko.yulia.myweather.helper.parsers.GismeteoParser;
-import com.shevchenko.yulia.myweather.helper.parsers.SinopticParser;
+package com.shevchenko.yulia.myweather.model.parsers;
 
 import java.io.IOException;
 import java.util.Calendar;

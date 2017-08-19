@@ -3,8 +3,8 @@ package com.shevchenko.yulia.myweather.async;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
-import com.shevchenko.yulia.myweather.MainActivity;
-import com.shevchenko.yulia.myweather.helper.PageCodeGrabber;
+import com.shevchenko.yulia.myweather.activities.MainActivity;
+import com.shevchenko.yulia.myweather.model.parsers.PageCodeGrabber;
 
 import java.io.IOException;
 import java.text.ParseException;

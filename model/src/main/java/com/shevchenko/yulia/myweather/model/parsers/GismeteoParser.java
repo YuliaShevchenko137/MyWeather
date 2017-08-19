@@ -1,6 +1,7 @@
-package com.shevchenko.yulia.myweather.helper.parsers;
+package com.shevchenko.yulia.myweather.model.parsers;
 
-import com.shevchenko.yulia.myweather.helper.entities.Weather;
+import com.shevchenko.yulia.myweather.model.entities.DayWeather;
+import com.shevchenko.yulia.myweather.model.entities.Weather;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,15 +45,15 @@ public class GismeteoParser {
         return res;
     }
 
-    public ArrayList<Weather> getDayWeather(String data){
+    public ArrayList<DayWeather> getDayWeather(String data){
         String[] hours = data.split("<tr class=\"wrow");
-        ArrayList<Weather> weathers = new ArrayList<>();
+        ArrayList<DayWeather> weathers = new ArrayList<>();
+        int count = 0;
         for (int i = 1; i < hours.length; i++) {
             String[] lines = hours[i].split("<td");
             String part1 = lines[0].split("\"> ")[1];
             String date = part1.split("Local: ")[1];
-            SimpleDateFormat format = new SimpleDateFormat();
-            format.applyPattern("yyyy-MM-dd H:mm");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd H:mm");
             Date thisDate;
             try {
                 thisDate = format.parse(date);
@@ -62,12 +63,34 @@ public class GismeteoParser {
             if (new Date(System.currentTimeMillis()).after(thisDate)) {
                 continue;
             }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            String day = dateFormat.format(thisDate);
+            String time = timeFormat.format(thisDate);
             String url = lines[1].split(" src=\"//")[1].split("\" alt=\"")[0];
             int temperature = parseTemperature(lines[3]);
             int pressure = parsePressure(lines[4]);
             String wind = parseWind(lines[5]);
             int humidity = parseHumidity(lines[6]);
-            weathers.add(new Weather(date, url, temperature, pressure, humidity, wind));
+            Weather thisWeather = new Weather(time, url, temperature, pressure, humidity, wind);
+            if (count != 0) {
+                String pastDate = weathers.get(count-1).getDate();
+                if (day.equals(pastDate)) {
+                    weathers.get(count-1).getList().add(thisWeather);
+                } else {
+                    ArrayList<Weather> arrayList = new ArrayList<>();
+                    arrayList.add(thisWeather);
+                    DayWeather dayWeather = new DayWeather(day, arrayList);
+                    weathers.add(dayWeather);
+                    count ++;
+                }
+            } else {
+                ArrayList<Weather> arrayList = new ArrayList<>();
+                arrayList.add(thisWeather);
+                DayWeather dayWeather = new DayWeather(day, arrayList);
+                weathers.add(dayWeather);
+                count ++;
+            }
         }
         return weathers;
     }

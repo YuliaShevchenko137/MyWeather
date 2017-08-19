@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.shevchenko.yulia.myweather"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -31,7 +31,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.google.code.gson:gson:2.8.1'
-    compile group: 'org.jsoup', name: 'jsoup', version: '1.10.3'
+
 
     testCompile 'junit:junit:4.12'
+    compile project(path: ':model')
 }

@@ -1,16 +1,16 @@
-package com.shevchenko.yulia.myweather.helper.entities;
+package com.shevchenko.yulia.myweather.model.entities;
 
 public class Weather {
 
-    public String getDate() {
-        return date;
+    public String getTime() {
+        return time;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    private String date;
+    private String time;
     private String url;
     private int temperature;
     private int pressure;
@@ -57,8 +57,8 @@ public class Weather {
         this.wind = wind;
     }
 
-    public Weather(String date, String url, int temperature, int pressure, int humidity, String wind) {
-        this.date = date;
+    public Weather(String time, String url, int temperature, int pressure, int humidity, String wind) {
+        this.time = time;
         this.url = url;
         this.temperature = temperature;
         this.pressure = pressure;
@@ -76,9 +76,34 @@ public class Weather {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Weather weather = (Weather) o;
+        return temperature == weather.temperature
+                && pressure == weather.pressure
+                && humidity == weather.humidity
+                && time.equals(weather.time)
+                && url.equals(weather.url)
+                && wind.equals(weather.wind);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = time.hashCode();
+        result = 31 * result + url.hashCode();
+        result = 31 * result + temperature;
+        result = 31 * result + pressure;
+        result = 31 * result + humidity;
+        result = 31 * result + wind.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Weather{" +
-                "date='" + date + '\'' +
+                "date='" + time + '\'' +
                 ", url='" + url + '\'' +
                 ", temperature=" + temperature +
                 ", pressure=" + pressure +

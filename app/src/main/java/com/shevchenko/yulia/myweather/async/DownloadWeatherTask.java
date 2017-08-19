@@ -2,18 +2,17 @@ package com.shevchenko.yulia.myweather.async;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.widget.Toast;
 
 
 import com.google.gson.Gson;
-import com.shevchenko.yulia.myweather.MainActivity;
-import com.shevchenko.yulia.myweather.helper.WeatherData;
-import com.shevchenko.yulia.myweather.helper.entities.Weather;
-import com.shevchenko.yulia.myweather.helper.parsers.GismeteoParser;
-import com.shevchenko.yulia.myweather.helper.parsers.SinopticParser;
+import com.shevchenko.yulia.myweather.activities.MainActivity;
+import com.shevchenko.yulia.myweather.model.parsers.WeatherData;
+import com.shevchenko.yulia.myweather.model.entities.DayWeather;
+import com.shevchenko.yulia.myweather.model.parsers.GismeteoParser;
+import com.shevchenko.yulia.myweather.model.parsers.SinopticParser;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -22,16 +21,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public final class DownloadWeatherTask extends AsyncTask<Void, String, Boolean> implements Task {
     
     protected final SharedPreferences sPref;
 
     private String mProgressMessage = "Выполняется загрузка данных";
 
-	private ArrayList<Weather> sinopticWeathers = new ArrayList<>();
-	private ArrayList<Weather> gismeteoWeathers = new ArrayList<>();
+	private ArrayList<DayWeather> sinopticWeathers = new ArrayList<>();
+	private ArrayList<DayWeather> gismeteoWeathers = new ArrayList<>();
 	private final OnTaskCompleteListener mTaskCompleteListener;
 	private Context context;
 	private MainActivity activity;
@@ -61,8 +58,8 @@ public final class DownloadWeatherTask extends AsyncTask<Void, String, Boolean> 
 				try {
 					String[] strings = WeatherData.getInstance().getSinopticData("погода-сумы");
 					for (int i = 0; i < strings.length; i++) {
-						ArrayList<Weather> temp = SinopticParser.getInstance().getDayWeather(strings[i], i);
-						Collections.addAll(sinopticWeathers, temp.toArray(new Weather[temp.size()]));
+						ArrayList<DayWeather> temp = SinopticParser.getInstance().getDayWeather(strings[i], i);
+						Collections.addAll(sinopticWeathers, temp.toArray(new DayWeather[temp.size()]));
 					}
 				} catch (IOException e) {
 					if (!activity.isShowDialog()) {
@@ -79,8 +76,8 @@ public final class DownloadWeatherTask extends AsyncTask<Void, String, Boolean> 
 				try {
 					String[] strings = WeatherData.getInstance().getGismeteoData();
 					for (String string : strings) {
-						ArrayList<Weather> temp = GismeteoParser.getInstance().getDayWeather(string);
-						Collections.addAll(gismeteoWeathers, temp.toArray(new Weather[temp.size()]));
+						ArrayList<DayWeather> temp = GismeteoParser.getInstance().getDayWeather(string);
+						Collections.addAll(gismeteoWeathers, temp.toArray(new DayWeather[temp.size()]));
 					}
 				} catch (IOException e) {
 					if (!activity.isShowDialog()) {
